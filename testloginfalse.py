@@ -19,3 +19,20 @@ driver.find_element_by_id("wpPassword1").send_keys(password)
 
 # нажмите кнопку входа в систему
 driver.find_element_by_id("wpLoginAttempt").click()
+# ждем завершения состояния готовности
+WebDriverWait(driver=driver, timeout=10).until(
+    lambda x: x.execute_script("return document.readyState === 'complete'")
+)
+error_message = "Incorrect username or password entered. Please try again."
+
+# получаем ошибки (если есть)
+errors = driver.find_elements_by_class_name("errorbox")
+
+# при необходимости распечатать ошибки
+# для e в ошибках:
+#     print(e.text)
+# если мы находим это сообщение об ошибке в составе error, значит вход не выполнен
+if any(error_message in e.text for e in errors):
+    print("[!] Login failed")
+else:
+    print("[+] Login successful")
