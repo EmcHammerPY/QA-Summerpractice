@@ -1,5 +1,4 @@
 from selenium import webdriver
-driver = webdriver.Chrome()
 from selenium.webdriver.support.ui import WebDriverWait
 
 
@@ -26,7 +25,7 @@ WebDriverWait(driver=driver, timeout=10).until(
 error_message = "Incorrect username or password entered. Please try again."
 
 # получаем ошибки (если есть)
-errors = driver.find_elements_by_class_name("errorbox")
+errors = driver.find_elements_by_class_name("new")
 
 # при необходимости распечатать ошибки
 # для e в ошибках:
