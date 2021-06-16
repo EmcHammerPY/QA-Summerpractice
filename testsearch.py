@@ -23,7 +23,6 @@ driver.find_element_by_id("searchButton").click()
 
 
 for index in range(1,6):
-    path = f"//div[@id ='mw-content-text']//div[@class =['mw-parser-output']//ul/li[{index}]"
-    print(driver.find_element_by_xpath(path).text)
+    path = f"//div[@id='mw-content-text']/ul/li[{index}]"
     assert word in driver.find_element_by_xpath(path).text
 
