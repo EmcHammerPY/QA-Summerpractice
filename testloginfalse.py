@@ -1,3 +1,5 @@
+from resources import get_element_by_id
+from resources import get_element_by_xpath
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -6,13 +8,12 @@ password = "1234567890QW"
 word = "Incorrect username or password entered. Please try again."
 
 driver = webdriver.Chrome("chromedriver")
-driver.implicitly_wait(10) # seconds
 driver.get("https://en.wikipedia.org/w/index.php?title=Special:UserLogin&returnto=Main+Page")
-driver.find_element_by_id("wpName1").send_keys(username)
-driver.find_element_by_id("wpPassword1").send_keys(password)
-driver.find_element_by_id("wpLoginAttempt").click()
+get_element_by_id(driver, "wpName1").send_keys(username)
+get_element_by_id(driver, "wpPassword1").send_keys(password)
+get_element_by_id(driver, "wpLoginAttempt").click()
 path = f"//div[@class = 'errorbox']"
-element = driver.find_element_by_xpath(path)
+element=get_element_by_xpath(driver, path)
 
 assert word == element.text
 
