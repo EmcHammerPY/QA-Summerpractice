@@ -10,7 +10,6 @@ def get_element_by_xpath(driver, xpath):
         return element
     except:
         print("can't get element")
-
         
 def get_element_by_id(driver, id):
     try:
@@ -20,4 +19,3 @@ def get_element_by_id(driver, id):
         return element
     except:
         print("can't get element")
-
