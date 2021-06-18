@@ -14,7 +14,7 @@ def get_element_by_xpath(driver, xpath):
         
 def get_element_by_id(driver, id):
     try:
-        element = WebDriverWait(driver, 10).until(
+        element = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.ID, id))
         )
         return element

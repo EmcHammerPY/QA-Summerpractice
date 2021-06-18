@@ -10,8 +10,8 @@ word = "Incorrect username or password entered. Please try again."
 driver = webdriver.Chrome("chromedriver")
 driver.get("https://en.wikipedia.org/w/index.php?title=Special:UserLogin&returnto=Main+Page")
 get_element_by_id(driver, "wpName1").send_keys(username)
-driver.find_element_by_id("wpPassword1").send_keys(password)
-driver.find_element_by_id("wpLoginAttempt").click()
+get_element_by_id(driver, "wpPassword1").send_keys(password)
+get_element_by_id(driver, "wpLoginAttempt").click()
 path = f"//div[@class = 'errorbox']"
 element=get_element_by_xpath(driver, path)
 
