@@ -11,8 +11,8 @@ driver.get("https://en.wikipedia.org/w/index.php?title=Special:UserLogin&returnt
 get_element_by_id(driver, "searchInput").send_keys(word)
 get_element_by_id(driver, "searchButton").click()
 path = f"//div[@id='mw-content-text']//li/a[@title]/.."
-elements=driver.find_elements_by_xpath(path)
 get_element_by_xpath(driver, path)
+elements=driver.find_elements_by_xpath(path)
 for index in range(5):    
     assert word in elements[index].text
 driver.quit()
