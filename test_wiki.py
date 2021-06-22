@@ -14,47 +14,35 @@ def browser():
 
 @pytest.fixture(scope="session")
 def context():
-    username = "Testt1212"
-    password = "1234567890QWE"
-    return username, password
-
-@pytest.fixture(scope="session")
-def test():
-    username1 = "Testt121"
-    password1 = "1234567890QW"
-    word1 = "Incorrect username or password entered. Please try again."
-    return username1, password1, word1
-
-@pytest.fixture(scope="session")
-def search():
-    word = "QA"
-    return word  
+    context_object=dict()
+    context_object["username"] = "Testt1212"
+    context_object["password"] = "1234567890QWE"
+    context_object["incorectpassword"] = "1234567890QW"
+    context_object["message"] = "Incorrect username or password entered. Please try again."
+    return context_object
 
 @pytest.mark.done
-def test_guest_should_see_login_link(context, browser):
-    username, password = context
-    get_element_by_id(browser, "wpName1").send_keys(username)
-    get_element_by_id(browser, "wpPassword1").send_keys(password)
+def test_login_success(context, browser):
+    get_element_by_id(browser, "wpName1").send_keys(context["username"])
+    get_element_by_id(browser, "wpPassword1").send_keys(context["password"])
     get_element_by_id(browser, "wpLoginAttempt").click()
     path = f"//div[@id='mw-head']//li/a[@title]/.."
     element = get_element_by_xpath(browser, path)
 
-    assert username == element.text
+    assert context["username"] == element.text
 
 @pytest.mark.done
-def test_guest_should_see_pass_link(test, browser):
-    username1, password1, word1 = test
-    get_element_by_id(browser, "wpName1").send_keys(username1)
-    get_element_by_id(browser, "wpPassword1").send_keys(password1)
+def test_login_failed(context, browser):
+    get_element_by_id(browser, "wpName1").send_keys(context["username"])
+    get_element_by_id(browser, "wpPassword1").send_keys(context["incorectpassword"])
     get_element_by_id(browser, "wpLoginAttempt").click()
     path = f"//div[@class = 'errorbox']"
     element = get_element_by_xpath(browser, path)
 
-    assert word1 == element.text
+    assert context["message"] == element.text
 
-@pytest.mark.done
-def test_guest_should_see_search_link(search, browser):
-    word = search
+#@pytest.mark.done
+def test_search(context, browser):
     get_element_by_id(browser, "searchInput").send_keys(word)
     get_element_by_id(browser, "searchButton").click()
     path = f"//div[@id='mw-content-text']//li/a[@title]/.."
