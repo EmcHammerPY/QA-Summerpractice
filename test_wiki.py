@@ -41,8 +41,10 @@ def test_login_failed(context, browser):
 
     assert context["message"] == element.text
 
-#@pytest.mark.done
-def test_search(context, browser):
+@pytest.mark.done
+@pytest.mark.search
+@pytest.mark.parametrize('word', ["QA", "auto", "Python"] )
+def test_search(word, browser):
     get_element_by_id(browser, "searchInput").send_keys(word)
     get_element_by_id(browser, "searchButton").click()
     path = f"//div[@id='mw-content-text']//li/a[@title]/.."
