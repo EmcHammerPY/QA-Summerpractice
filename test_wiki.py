@@ -1,4 +1,5 @@
 import pytest
+import requests
 from resources import get_element_by_id
 from resources import get_element_by_xpath
 from selenium import webdriver
@@ -52,3 +53,21 @@ def test_search(word, browser):
     elements=browser.find_elements_by_xpath(path)
     for index in range(5):    
         assert word in elements[index].text
+
+@pytest.mark.done
+@pytest.mark.article
+@pytest.mark.parametrize('country', ["Qatar", "Moldova", "Romania"] )
+def test_api_article(country):
+    response = requests.get(f"https://en.wikipedia.org/api/rest_v1/page/summary/{country}")
+    assert country == response.json()['titles']['canonical']
+    assert country == response.json()['title']
+    assert country == response.json()['titles']['display']
+    assert response.status_code == 200
+
+@pytest.mark.done
+@pytest.mark.fsearch
+def test_api_fsearch():
+    country = "qwety"
+    response = requests.get(f"https://en.wikipedia.org/api/rest_v1/page/summary/{country}")
+    assert "Not found." == response.json()['title']
+    assert response.status_code == 404
