@@ -11,7 +11,7 @@ import time
 
 @pytest.fixture(scope="function")
 def browser():
-    driver = webdriver.Chrome("chromedriver")
+    driver = webdriver.Firefox()
     driver.get("https://en.wikipedia.org/w/index.php?title=Special:UserLogin&returnto=Main+Page")
     yield driver
    # time.sleep(1)
