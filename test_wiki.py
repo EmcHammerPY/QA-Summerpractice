@@ -1,5 +1,6 @@
 import pytest
 import requests
+import pyautogui
 from pages.login_page import LoginPage
 from pages.search_page import SearchPage
 from selenium import webdriver
@@ -7,11 +8,14 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
 import time
 
+
 @pytest.fixture(scope="function")
 def browser():
     driver = webdriver.Chrome("chromedriver")
     driver.get("https://en.wikipedia.org/w/index.php?title=Special:UserLogin&returnto=Main+Page")
     yield driver
+   # time.sleep(1)
+   # driver.get_screenshot_as_file('Wikitest.png') 
     driver.quit() 
 
 @pytest.fixture(scope="session")
@@ -29,7 +33,9 @@ def context():
 def test_login_success(context, browser):
     lp = LoginPage(browser)
     lp.input_username(context["username"])
+    time.sleep(1)
     lp.input_password(context["password"])
+    time.sleep(1)
     lp.click_on_login_button()
     lp.check_username(context["username"])
 
@@ -50,6 +56,7 @@ def test_search(word, browser):
     lp.input_word(word)
     lp.click_on_search_button()
     lp.check_word(word)
+
 
 @pytest.mark.done
 @pytest.mark.article
